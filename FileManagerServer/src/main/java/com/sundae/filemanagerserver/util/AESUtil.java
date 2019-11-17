@@ -3,6 +3,7 @@ package com.sundae.filemanagerserver.util;
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.spec.SecretKeySpec;
+import java.io.*;
 
 /**
  * @Author daijiyuan
@@ -32,5 +33,32 @@ public class AESUtil {
         return cipher.doFinal(data);
     }
 
+    public static byte[] encryptFile2Bytes(InputStream inputStream, byte[] key) throws Exception{
+        BufferedInputStream bufferedInputStream = null;
+        try{
+            bufferedInputStream = new BufferedInputStream(inputStream);
+            int len = bufferedInputStream.available();
+            byte[] sourceBytes = new byte[len];
+            bufferedInputStream.read(sourceBytes, 0, len);
+            byte[] encodeBytes = encrypt(sourceBytes, key);
+            return encodeBytes;
+        }finally {
+            bufferedInputStream.close();
+        }
+    }
+
+    public static byte[] decryptFile2Bytes(File file, byte[] key) throws Exception{
+        FileInputStream fileInputStream = null;
+        try {
+            fileInputStream = new FileInputStream(file);
+            int len = fileInputStream.available();
+            byte[] sourceBytes = new byte[len];
+            fileInputStream.read(sourceBytes, 0, len);
+            byte[] decodeBytes = decrypt(sourceBytes, key);
+            return decodeBytes;
+        }finally {
+            fileInputStream.close();
+        }
+    }
 
 }

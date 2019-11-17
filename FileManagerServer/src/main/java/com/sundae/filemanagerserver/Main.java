@@ -40,6 +40,8 @@ public class Main {
 
         JettyServer jettyServer = new JettyServer();
         jettyServer.start();
+        DerbyHelper.getInstance().shutdownDerby();
+
     }
 
 }

@@ -1,9 +1,10 @@
 package com.sundae.filemanagerserver.util;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import com.sundae.filemanagerserver.Constant;
+
+import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @Author daijiyuan
@@ -23,6 +24,33 @@ public class FileUtil {
             stringBuilder.append(s);
         }
         return stringBuilder.toString();
+    }
+
+    public static void saveFile(InputStream inputStream, File file) throws IOException {
+        FileOutputStream fileOutputStream = new FileOutputStream(file.getPath());
+        byte[] bytes = new byte[1024];
+        int length = 0;
+        while ((length = inputStream.read(bytes)) != -1){
+            fileOutputStream.write(bytes, 0, length);
+        }
+        fileOutputStream.close();
+        inputStream.close();
+    }
+
+    public static void saveFile(byte[] bytes, File file) throws IOException {
+        FileOutputStream fileOutputStream = new FileOutputStream(file.getPath());
+        fileOutputStream.write(bytes, 0, bytes.length);
+        fileOutputStream.close();
+    }
+
+    private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+    public static String getTodayPath(){
+        String dirName = simpleDateFormat.format(new Date());
+        dirName = Constant.SAVE_FILE_PATH + "/" + dirName;
+        File file = new File(dirName);
+        if(!file.exists())
+            file.mkdirs();
+        return file.getPath();
     }
 
 }

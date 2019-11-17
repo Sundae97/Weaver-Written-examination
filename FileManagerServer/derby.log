@@ -1,0 +1,14 @@
+----------------------------------------------------------------
+Sun Nov 17 20:35:59 CST 2019:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.13.1.1 - (1765088): instance a816c00e-016e-795c-dc5b-00000d7ed4c0 
+on database directory /home/sundae/CodeProjects/IdeaProjects/WeaverProject/FileManagerServer/file_db with class loader sun.misc.Launcher$AppClassLoader@18b4aac2 
+Loaded from file:/home/sundae/.m2/repository/org/apache/derby/derby/10.13.1.1/derby-10.13.1.1.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_221-b11
+user.dir=/home/sundae/CodeProjects/IdeaProjects/WeaverProject/FileManagerServer
+os.name=Linux
+os.arch=amd64
+os.version=5.0.0-35-generic
+derby.system.home=null
+derby.stream.error.file=logs/derby.log
+Database Class Loader started - derby.database.classpath=''

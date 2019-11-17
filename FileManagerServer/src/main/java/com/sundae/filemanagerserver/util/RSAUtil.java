@@ -65,12 +65,20 @@ public class RSAUtil {
         return outStr;
     }
 
+    public static String encrypt(byte[] bytes, PublicKey publicKey) throws Exception {
+        return encrypt(new String(bytes), publicKey);
+    }
+
     public static String decrypt(String str, PrivateKey privateKey) throws Exception {
         byte[] inputByte = Base64.decode(str.getBytes("UTF-8"));
         Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.DECRYPT_MODE, privateKey);
         String outStr = new String(cipher.doFinal(inputByte));
         return outStr;
+    }
+
+    public static String decrypt(byte[] bytes, PrivateKey privateKey) throws Exception {
+        return decrypt(new String(bytes), privateKey);
     }
 
     public static String sign(String data, PrivateKey privateKey) {

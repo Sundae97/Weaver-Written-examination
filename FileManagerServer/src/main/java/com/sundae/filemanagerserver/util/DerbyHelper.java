@@ -17,6 +17,14 @@ public class DerbyHelper {
 
     private static DerbyHelper instance = null;
 
+    static {
+        try {
+            Class.forName(Constant.DERBY_DRIVER);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     private static final Logger logger = LoggerFactory.getLogger(DerbyHelper.class);
 
     private static final String TABLE_CREATE_SQL = "CREATE TABLE " + Constant.TABLE_NAME + "(\n" +
@@ -56,7 +64,6 @@ public class DerbyHelper {
     }
 
     private void connect() throws ClassNotFoundException, SQLException {
-        Class.forName(Constant.DERBY_DRIVER);
         connection = DriverManager.getConnection(Constant.CONNECT_URL);
         logger.info("derby connect success");
     }
@@ -75,37 +82,49 @@ public class DerbyHelper {
         }
     }
 
-    public boolean execute(String sql) {
+//    public boolean execute(String sql, String[] args) {
+//        try{
+//            Statement statement = connection.prepareStatement(sql, args);
+//            return statement.execute(sql);
+//        }catch (SQLException e){
+//            logger.error("execute()" , e);
+//            return false;
+//        }
+//    }
+
+    public ResultSet executeQuery(String sql, Object[] values) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            for (int i = 0; i < values.length; i++) {
+                preparedStatement.setObject(i+1, values[i]);
+            }
+            return preparedStatement.executeQuery();
+        }finally {
+            //preparedStatement.close();
+        }
+
+    }
+
+    public int executeUpdate(String sql, Object[] values) throws SQLException {
+        PreparedStatement preparedStatement = null;
         try{
-            Statement statement = connection.createStatement();
-            return statement.execute(sql);
-        }catch (SQLException e){
-            logger.error("execute()" , e);
-            return false;
+            preparedStatement = connection.prepareStatement(sql);
+            for (int i = 0; i < values.length; i++) {
+                preparedStatement.setObject(i+1, values[i]);
+            }
+            return preparedStatement.executeUpdate();
+        }finally {
+            preparedStatement.close();
         }
     }
 
-    public ResultSet executeQuery(String sql) {
-        try{
-            Statement statement = connection.createStatement();
-            return statement.executeQuery(sql);
-        }catch (SQLException e){
-            logger.error("executeQuery()" , e);
-            return null;
+    public void shutdownDerby(){
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            logger.error("closeConnection", e);
         }
-    }
-
-    public int executeUpdate(String sql) {
-        try{
-            Statement statement = connection.createStatement();
-            return statement.executeUpdate(sql);
-        }catch (SQLException e){
-            logger.error("executeUpdate()" , e);
-            return -1;
-        }
-    }
-
-    private static void shutdownDerby(){
         boolean gotSQLExc = false;
         try {
             DriverManager.getConnection("jdbc:derby:;shutdown=true");

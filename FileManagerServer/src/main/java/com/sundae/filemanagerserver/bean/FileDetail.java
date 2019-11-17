@@ -1,5 +1,7 @@
 package com.sundae.filemanagerserver.bean;
 
+import java.util.Date;
+
 /**
  * @Author daijiyuan
  * @Email 948820549@qq.com
@@ -13,14 +15,14 @@ public class FileDetail {
     private String fileName;
     private String fileType;
     private long fileSize;
-    private long createTime;
+    private Date createTime;
     private String filePath;
     private String secretKey;
 
     public FileDetail() {
     }
 
-    public FileDetail(String fileSourceName, String fileName, String fileType, long fileSize, long createTime, String filePath, String secretKey) {
+    public FileDetail(String fileSourceName, String fileName, String fileType, long fileSize, Date createTime, String filePath, String secretKey) {
         this.fileSourceName = fileSourceName;
         this.fileName = fileName;
         this.fileType = fileType;
@@ -70,11 +72,11 @@ public class FileDetail {
         this.fileSize = fileSize;
     }
 
-    public long getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(long createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 

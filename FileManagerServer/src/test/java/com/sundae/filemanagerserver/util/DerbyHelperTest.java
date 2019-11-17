@@ -17,12 +17,12 @@ public class DerbyHelperTest {
 
     @Test
     public void showAllData() throws SQLException {
-        ResultSet resultSet = DerbyHelper.getInstance().executeQuery("SELECT * FROM " + Constant.TABLE_NAME);
+        ResultSet resultSet = DerbyHelper.getInstance().executeQuery("SELECT * FROM " + Constant.TABLE_NAME, new Object[]{});
         while (resultSet.next()){
             FileDetail fileDetail = new FileDetail();
             fileDetail.setId(resultSet.getLong("id"));
             fileDetail.setFileName(resultSet.getString("file_name"));
-            fileDetail.setCreateTime(resultSet.getLong("create_date"));
+            fileDetail.setCreateTime(resultSet.getDate("create_date"));
             fileDetail.setSecretKey(resultSet.getString("secret_key"));
             fileDetail.setFilePath(resultSet.getString("file_path"));
             fileDetail.setFileSize(resultSet.getLong("file_size"));

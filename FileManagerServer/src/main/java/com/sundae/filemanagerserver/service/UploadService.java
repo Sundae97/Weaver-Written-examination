@@ -66,7 +66,7 @@ public class UploadService {
         fileDetail.setSecretKey(rsaEncryptKey);
         fileDetailDao.addFileDetail(fileDetail);
 
-        writer.println("upload success");
+        writer.println(fileName);
     }
 
 }

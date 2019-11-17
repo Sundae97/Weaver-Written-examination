@@ -30,4 +30,11 @@ public class FileDetailDaoTest {
             System.out.println(k+"");
         }
     }
+
+    @Test
+    public void getFileDetailByUUID() {
+        FileDetailDao fileDetailDao = new FileDetailDao();
+        FileDetail fileDetail = fileDetailDao.getFileDetailByUUID("eab462c0-e6f6-4ac2-ae4f-c407b7a81eff");
+        System.out.println(fileDetail);
+    }
 }

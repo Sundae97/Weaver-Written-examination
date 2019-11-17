@@ -6,6 +6,7 @@ import com.sundae.filemanagerserver.util.DerbyHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -19,7 +20,8 @@ public class FileDetailDao {
 
     private DerbyHelper derbyHelper = DerbyHelper.getInstance();
 
-    private static final String INSERT_SQL = "INSERT INTO " + Constant.TABLE_NAME + " " +
+    private static final String TABLE_NAME = Constant.TABLE_NAME;
+    private static final String INSERT_SQL = "INSERT INTO " + TABLE_NAME + " " +
             "(file_sourcename,file_name,file_type,file_size,create_date,file_path,secret_key) " +
             "VALUES(?,?,?,?,?,?,?)";
 
@@ -37,6 +39,31 @@ public class FileDetailDao {
         } catch (SQLException e) {
             logger.error("addFileDetail()", e);
             return -1;
+        }
+    }
+
+    private static final String QUERY_BY_UUID_SQL = "SELECT * FROM " + TABLE_NAME + "" +
+            " WHERE file_name=?";
+    public FileDetail getFileDetailByUUID(String uuid){
+
+        try {
+            ResultSet resultSet = derbyHelper.executeQuery(QUERY_BY_UUID_SQL, new Object[]{uuid});
+            if(!resultSet.next())
+                return null;
+            FileDetail fileDetail = new FileDetail();
+            fileDetail.setId(resultSet.getLong("id"));
+            fileDetail.setFileName(resultSet.getString("file_name"));
+            fileDetail.setCreateTime(resultSet.getDate("create_date"));
+            fileDetail.setSecretKey(resultSet.getString("secret_key"));
+            fileDetail.setFilePath(resultSet.getString("file_path"));
+            fileDetail.setFileSize(resultSet.getLong("file_size"));
+            fileDetail.setFileType(resultSet.getString("file_type"));
+            fileDetail.setFileSourceName(resultSet.getString("file_sourcename"));
+            resultSet.close();
+            return fileDetail;
+        } catch (SQLException e) {
+            logger.error("getFileDetailByUUID()", e);
+            return null;
         }
     }
 

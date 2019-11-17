@@ -26,6 +26,26 @@ public class FileUtil {
         return stringBuilder.toString();
     }
 
+    public static byte[] readFile2Bytes(File file) throws IOException {
+        FileInputStream fileInputStream = new FileInputStream(file);
+        int len = fileInputStream.available();
+        byte[] bytes = new byte[len];
+        fileInputStream.read(bytes, 0, len);
+        fileInputStream.close();
+        return bytes;
+    }
+
+    public static void readFile2OutputStream(File file, OutputStream outputStream) throws IOException {
+        FileInputStream fileInputStream = new FileInputStream(file);
+        byte[] bytes = new byte[1024];
+        int len = 0;
+        while ((len=fileInputStream.read(bytes)) != -1){
+            outputStream.write(bytes, 0, len);
+        }
+        fileInputStream.close();
+        outputStream.close();
+    }
+
     public static void saveFile(InputStream inputStream, File file) throws IOException {
         FileOutputStream fileOutputStream = new FileOutputStream(file.getPath());
         byte[] bytes = new byte[1024];

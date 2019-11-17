@@ -1,5 +1,6 @@
 package com.sundae.filemanagerserver;
 
+import com.sundae.filemanagerserver.servlet.DownloadServlet;
 import com.sundae.filemanagerserver.servlet.UploadServlet;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
@@ -34,6 +35,7 @@ public class JettyServer {
 
         ServletContextHandler servletContextHandler = new ServletContextHandler();
         servletContextHandler.addServlet(UploadServlet.class, "/upload");
+        servletContextHandler.addServlet(DownloadServlet.class, "/download");
 
         server.setHandler(servletContextHandler);
     }

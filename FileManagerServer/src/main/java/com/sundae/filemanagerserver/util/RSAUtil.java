@@ -24,21 +24,9 @@ public class RSAUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(RSAUtil.class);
 
-    public static String readStringFromResource(String filePath) throws IOException {
-        InputStream inputStream = RSAUtil.class.getResourceAsStream(filePath);
-        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-        StringBuilder stringBuilder = new StringBuilder();
-        String s = null;
-        while ((s = bufferedReader.readLine()) != null){
-            stringBuilder.append(s);
-        }
-        return stringBuilder.toString();
-    }
-
     public static PrivateKey getPrivateKeyFromResource(String priKeyFilePath){
         try {
-            String priKeyStr = readStringFromResource(priKeyFilePath);
+            String priKeyStr = FileUtil.readStringFromResource(priKeyFilePath);
             return getPrivateKey(priKeyStr);
         } catch (Exception e) {
             logger.error("readStringFromFile()", e);
@@ -48,7 +36,7 @@ public class RSAUtil {
 
     public static PublicKey getPublicKeyFromResource(String pubKeyFilePath){
         try {
-            String priKeyStr = readStringFromResource(pubKeyFilePath);
+            String priKeyStr = FileUtil.readStringFromResource(pubKeyFilePath);
             return getPublicKey(priKeyStr);
         } catch (Exception e) {
             logger.error("readStringFromFile()", e);

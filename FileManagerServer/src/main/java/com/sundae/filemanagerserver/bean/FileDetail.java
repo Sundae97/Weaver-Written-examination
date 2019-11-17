@@ -15,19 +15,19 @@ public class FileDetail {
     private long fileSize;
     private long createTime;
     private String filePath;
-    private String fileMetaCode;
+    private String secretKey;
 
     public FileDetail() {
     }
 
-    public FileDetail(String fileSourceName, String fileName, String fileType, long fileSize, long createTime, String filePath, String fileMetaCode) {
+    public FileDetail(String fileSourceName, String fileName, String fileType, long fileSize, long createTime, String filePath, String secretKey) {
         this.fileSourceName = fileSourceName;
         this.fileName = fileName;
         this.fileType = fileType;
         this.fileSize = fileSize;
         this.createTime = createTime;
         this.filePath = filePath;
-        this.fileMetaCode = fileMetaCode;
+        this.secretKey = secretKey;
     }
 
     public long getId() {
@@ -86,12 +86,12 @@ public class FileDetail {
         this.filePath = filePath;
     }
 
-    public String getFileMetaCode() {
-        return fileMetaCode;
+    public String getSecretKey() {
+        return secretKey;
     }
 
-    public void setFileMetaCode(String fileMetaCode) {
-        this.fileMetaCode = fileMetaCode;
+    public void setSecretKey(String secretKey) {
+        this.secretKey = secretKey;
     }
 
     @Override
@@ -104,7 +104,7 @@ public class FileDetail {
                 ", fileSize=" + fileSize +
                 ", createTime=" + createTime +
                 ", filePath='" + filePath + '\'' +
-                ", fileMetaCode='" + fileMetaCode + '\'' +
+                ", secretKey='" + secretKey + '\'' +
                 '}';
     }
 }

@@ -4,10 +4,7 @@ import com.sundae.filemanagerserver.Constant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 /**
  * @Author daijiyuan
@@ -22,6 +19,17 @@ public class DerbyHelper {
 
     private static final Logger logger = LoggerFactory.getLogger(DerbyHelper.class);
 
+    private static final String TABLE_CREATE_SQL = "CREATE TABLE " + Constant.TABLE_NAME + "(\n" +
+            "  id BIGINT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY,\n" +
+            "  file_sourcename VARCHAR(255) NOT NULL,\n" +
+            "  file_name VARCHAR(255) NOT NULL,\n" +
+            "  file_type VARCHAR(30) NOT NULL,\n" +
+            "  file_size BIGINT NOT NULL,\n" +
+            "  create_date TIMESTAMP NOT NULL,\n" +
+            "  file_path VARCHAR(255) NOT NULL,\n" +
+            "  secret_key VARCHAR(255) NOT NULL\n" +
+            ")";
+
     public static DerbyHelper getInstance(){
         if(instance == null){
             synchronized (DerbyHelper.class){
@@ -34,7 +42,6 @@ public class DerbyHelper {
     }
 
     private Connection connection = null;
-    private Statement statement = null;
 
     private DerbyHelper(){
         try {
@@ -51,13 +58,13 @@ public class DerbyHelper {
     private void connect() throws ClassNotFoundException, SQLException {
         Class.forName(Constant.DERBY_DRIVER);
         connection = DriverManager.getConnection(Constant.CONNECT_URL);
-        statement = connection.createStatement();
         logger.info("derby connect success");
     }
 
     private void createDefaultTable(){
         try {
-            statement.execute(Constant.TABLE_CREATE_SQL);
+            Statement statement = connection.createStatement();
+            statement.execute(TABLE_CREATE_SQL);
             logger.info("default table created");
         } catch (SQLException e) {
             if(DerbyHelper.isExistsTable(e)){
@@ -65,6 +72,36 @@ public class DerbyHelper {
             }else{
                 logger.error("createDefaultTable()", e);
             }
+        }
+    }
+
+    public boolean execute(String sql) {
+        try{
+            Statement statement = connection.createStatement();
+            return statement.execute(sql);
+        }catch (SQLException e){
+            logger.error("execute()" , e);
+            return false;
+        }
+    }
+
+    public ResultSet executeQuery(String sql) {
+        try{
+            Statement statement = connection.createStatement();
+            return statement.executeQuery(sql);
+        }catch (SQLException e){
+            logger.error("executeQuery()" , e);
+            return null;
+        }
+    }
+
+    public int executeUpdate(String sql) {
+        try{
+            Statement statement = connection.createStatement();
+            return statement.executeUpdate(sql);
+        }catch (SQLException e){
+            logger.error("executeUpdate()" , e);
+            return -1;
         }
     }
 

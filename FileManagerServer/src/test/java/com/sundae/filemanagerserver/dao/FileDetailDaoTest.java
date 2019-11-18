@@ -3,7 +3,9 @@ package com.sundae.filemanagerserver.dao;
 import com.sundae.filemanagerserver.bean.FileDetail;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -36,5 +38,14 @@ public class FileDetailDaoTest {
         FileDetailDao fileDetailDao = new FileDetailDao();
         FileDetail fileDetail = fileDetailDao.getFileDetailByUUID("eab462c0-e6f6-4ac2-ae4f-c407b7a81eff");
         System.out.println(fileDetail);
+        System.out.println(fileDetail.toJsonString());
+    }
+
+    @Test
+    public void getLatestFileDetailList() {
+        List<FileDetail> list = new FileDetailDao().getLatestFileDetailList(10);
+        for (FileDetail fileDetail: list) {
+            System.out.println(fileDetail.toString());
+        }
     }
 }

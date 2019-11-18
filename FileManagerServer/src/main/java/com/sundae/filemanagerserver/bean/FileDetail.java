@@ -109,4 +109,26 @@ public class FileDetail {
                 ", secretKey='" + secretKey + '\'' +
                 '}';
     }
+
+    public String toJsonString(){
+        String jsonStr = "{\"createTime\":\"%s\"," +
+                "\"fileName\":\"%s\"," +
+                "\"filePath\":\"%s\"," +
+                "\"fileSize\":%d," +
+                "\"fileSourceName\":\"%s\"," +
+                "\"fileType\":\"%s\"," +
+                "\"id\":%d," +
+                "\"secretKey\":\"%s\"" +
+                "}";
+        return String.format(jsonStr,
+                createTime,
+                fileName.replaceAll("\n", "\\\\n"),
+                filePath.replaceAll("\n", "\\\\n"),
+                fileSize,
+                fileSourceName.replaceAll("\n", "\\\\n"),
+                fileType,
+                id,
+                secretKey.replaceAll("\n", "\\\\n") //正则，所以四个
+                );
+    }
 }

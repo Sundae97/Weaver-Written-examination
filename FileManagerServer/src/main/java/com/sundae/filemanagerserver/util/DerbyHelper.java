@@ -82,22 +82,14 @@ public class DerbyHelper {
         }
     }
 
-//    public boolean execute(String sql, String[] args) {
-//        try{
-//            Statement statement = connection.prepareStatement(sql, args);
-//            return statement.execute(sql);
-//        }catch (SQLException e){
-//            logger.error("execute()" , e);
-//            return false;
-//        }
-//    }
-
     public ResultSet executeQuery(String sql, Object[] values) throws SQLException {
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement(sql);
-            for (int i = 0; i < values.length; i++) {
-                preparedStatement.setObject(i+1, values[i]);
+            if (values != null && values.length > 0){
+                for (int i = 0; i < values.length; i++) {
+                    preparedStatement.setObject(i+1, values[i]);
+                }
             }
             return preparedStatement.executeQuery();
         }finally {

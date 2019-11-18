@@ -30,7 +30,7 @@ public class UploadServlet extends HttpServlet {
     private UploadService uploadService = new UploadService();
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html;charset=UTF-8");
         try {

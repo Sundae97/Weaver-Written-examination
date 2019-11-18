@@ -90,7 +90,7 @@ public class RSAUtil {
             Signature signature = Signature.getInstance("MD5withRSA");
             signature.initSign(key);
             signature.update(data.getBytes());
-            return Base64.encode(signature.sign());
+            return Base64.encode(signature.sign()).replaceAll("\n","");
         }catch (Exception e){
             logger.error("sign()", e);
             return null;

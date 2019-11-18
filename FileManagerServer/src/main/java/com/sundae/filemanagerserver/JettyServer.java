@@ -1,5 +1,6 @@
 package com.sundae.filemanagerserver;
 
+import com.sundae.filemanagerserver.filter.AuthFilter;
 import com.sundae.filemanagerserver.servlet.DownloadServlet;
 import com.sundae.filemanagerserver.servlet.GetMetaDataListServlet;
 import com.sundae.filemanagerserver.servlet.GetMetaDataServlet;
@@ -11,6 +12,9 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.servlet.DispatcherType;
+import java.util.EnumSet;
 
 /**
  * @Author daijiyuan
@@ -40,6 +44,7 @@ public class JettyServer {
         servletContextHandler.addServlet(DownloadServlet.class, "/download");
         servletContextHandler.addServlet(GetMetaDataServlet.class, "/getMetaData");
         servletContextHandler.addServlet(GetMetaDataListServlet.class, "/getMetaDataList");
+        servletContextHandler.addFilter(AuthFilter.class, "/*", EnumSet.of(DispatcherType.REQUEST));
 
         server.setHandler(servletContextHandler);
     }

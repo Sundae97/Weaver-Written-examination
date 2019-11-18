@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+    <title>FileManager-Client</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css"/>
+</head>
+<body>
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">FileManager-Client-Sundae</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6 col-md-6" style="padding: 0px 8px 0px 16px;">
+                <div style="border-style: solid;border-width: 2px;border-color: #2b542c;height: 300px;">
+                    <h3 style="margin-left: 8px">上传文件</h3>
+                    <div class="center-block" style="height: 220px;border-style: dotted;border-width: 2px;border-color: #2b542c;padding: 8px;margin: 8px">
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <input id='location' class="form-control" disabled/>
+                                <input type="button" id="i-check" value="浏览" class="btn btn-success" onclick="openFileExplore()"/>
+                                <input type="file" id='i-file' onchange="showInInputBox()" style="display: none"/>
+                                <button type="button" class="btn btn-primary form-control" onclick="upload()" style="max-width: 54px;">上传</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-6" style="padding: 0px 16px 0px 8px;">
+                <div style="border-style: solid;border-width: 2px;border-color: #2aabd2;height: 300px;">
+                    <h3 style="margin-left: 8px">下载文件</h3>
+                    <div class="center-block" style="height: 220px;border-style: dotted;border-width: 2px;border-color: #2aabd2;padding: 8px;margin: 8px">
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <input id='uuid' type="text" class="form-control"/>
+                                <button type="button" class="btn btn-primary form-control" onclick="upload()" style="max-width: 54px;">下载</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12" style="height: 450px;padding: 16px;">
+                <div style="border-style: solid;border-width: 2px;border-color: #5cb85c;height: 300px;">
+                    <h3 style="margin-left: 8px">最近十条数据</h3>
+                    <div class="center-block" style="height: 220px;border-style: dotted;border-width: 2px;border-color: #5cb85c;padding: 8px;margin: 8px">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/jquery-3.4.1.min.js"/>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+        function upload() {
+            console.log($("#file")[0].files[0]);
+        }
+
+        function openFileExplore() {
+            $('#i-file').click();
+        }
+        
+        function showInInputBox() {
+            $('#location').val($('#i-file').val());
+        }
+    </script>
+</body>
+</html>

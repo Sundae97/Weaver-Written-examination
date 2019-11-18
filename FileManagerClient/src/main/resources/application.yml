@@ -1,2 +1,20 @@
 server:
   port: 8080
+
+spring:
+  thymeleaf:
+    mode: HTML
+    encoding: UTF-8
+    cache: false  #开发时关闭缓存,不然没法看到实时页面
+    enabled: true
+    suffix: .html
+    prefix: classpath:/templates/
+
+  devtools:
+    livereload:
+      enabled: true
+#  mvc:
+#    static-path-pattern: /**
+#  resources:
+#    static-locations: classpath:/templates/,classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
+#

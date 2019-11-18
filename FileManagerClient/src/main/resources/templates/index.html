@@ -13,17 +13,19 @@
     <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">FileManager-Client-Sundae</a>
+                <a class="navbar-brand">FileManager-Client-Sundae</a>
             </div>
         </div>
     </nav>
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-6 col-md-6" style="padding: 0px 8px 0px 16px;">
-                <div style="border-style: solid;border-width: 2px;border-color: #2b542c;height: 300px;">
-                    <h3 style="margin-left: 8px">上传文件</h3>
-                    <div class="center-block" style="height: 220px;border-style: dotted;border-width: 2px;border-color: #2b542c;padding: 8px;margin: 8px">
+            <div class="col-sm-6 col-md-6">
+                <div class="panel panel-success" style="height: 150px;">
+                    <div class="panel-heading">
+                        <h5>上传文件</h5>
+                    </div>
+                    <div class="panel-body">
                         <form class="form-inline">
                             <div class="form-group">
                                 <input id='location' class="form-control" disabled/>
@@ -35,10 +37,13 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6 col-md-6" style="padding: 0px 16px 0px 8px;">
-                <div style="border-style: solid;border-width: 2px;border-color: #2aabd2;height: 300px;">
-                    <h3 style="margin-left: 8px">下载文件</h3>
-                    <div class="center-block" style="height: 220px;border-style: dotted;border-width: 2px;border-color: #2aabd2;padding: 8px;margin: 8px">
+
+            <div class="col-sm-6 col-md-6">
+                <div class="panel panel-info" style="height: 150px;">
+                    <div class="panel-heading">
+                        <h5>下载文件</h5>
+                    </div>
+                    <div class="panel-body">
                         <form class="form-inline">
                             <div class="form-group">
                                 <input id='uuid' type="text" class="form-control"/>
@@ -48,14 +53,39 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-12 col-md-12" style="height: 450px;padding: 16px;">
-                <div style="border-style: solid;border-width: 2px;border-color: #5cb85c;height: 300px;">
-                    <h3 style="margin-left: 8px">最近十条数据</h3>
-                    <div class="center-block" style="height: 220px;border-style: dotted;border-width: 2px;border-color: #5cb85c;padding: 8px;margin: 8px">
 
+            <div class="col-sm-12 col-md-12">
+                <div class="panel panel-warning" style="height: 450px;">
+                    <div class="panel-heading">
+                        <h5>最近十条数据</h5>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-bordered table-hover">
+                            <tr class="">
+                                <th>ID</th>
+                                <th>User</th>
+                                <th>Name</th>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Sundae</td>
+                                <td>DJY</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Sundae</td>
+                                <td>DJY</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Sundae</td>
+                                <td>DJY</td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 

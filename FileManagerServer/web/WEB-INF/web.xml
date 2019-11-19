@@ -4,20 +4,42 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
     
-    <servlet>
-        <servlet-name>UploadServlet</servlet-name>
-        <servlet-class>com.sundae.filemanagerserver.servlet.UploadServlet</servlet-class>
-        <multipart-config>  <!-- @MultipartConfig注解没有效果,使用xml配置代替-->
-            <location>/tmp</location>
-            <max-file-size>20848820</max-file-size>
-            <max-request-size>418018841</max-request-size>
-            <file-size-threshold>1048576</file-size-threshold>
-        </multipart-config>
-    </servlet>
-    
-    <servlet-mapping>
-        <servlet-name>UploadServlet</servlet-name>
-        <url-pattern>/upload</url-pattern>
-    </servlet-mapping>
+<!--    <servlet>-->
+<!--        <servlet-name>UploadServlet</servlet-name>-->
+<!--        <servlet-class>com.sundae.filemanagerserver.servlet.UploadServlet</servlet-class>-->
+<!--        <multipart-config>  &lt;!&ndash; @MultipartConfig注解没有效果,使用xml配置代替&ndash;&gt;-->
+<!--            <location>/tmp</location>-->
+<!--            <max-file-size>20848820</max-file-size>-->
+<!--            <max-request-size>418018841</max-request-size>-->
+<!--            <file-size-threshold>1048576</file-size-threshold>-->
+<!--        </multipart-config>-->
+<!--    </servlet>-->
+<!--    -->
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>UploadServlet</servlet-name>-->
+<!--        <url-pattern>/upload</url-pattern>-->
+<!--    </servlet-mapping>-->
+
+<!--    <filter>-->
+<!--        <filter-name>cross-origin</filter-name>-->
+<!--        <filter-class>org.eclipse.jetty.servlets.CrossOriginFilter</filter-class>-->
+<!--        <init-param>-->
+<!--            <param-name>allowedOrigins</param-name>-->
+<!--            <param-value>*</param-value>-->
+<!--        </init-param>-->
+<!--        <init-param>-->
+<!--            <param-name>allowedMethods</param-name>-->
+<!--            <param-value>GET,POST,HEAD</param-value>-->
+<!--        </init-param>-->
+<!--        <init-param>-->
+<!--            <param-name>allowedHeaders</param-name>-->
+<!--            <param-value>X-Requested-With,Content-Type,Accept,Origin</param-value>-->
+<!--        </init-param>-->
+<!--    </filter>-->
+<!--    &lt;!&ndash; 此处表示jetty中的所有url都可以支持跨域 &ndash;&gt;-->
+<!--    <filter-mapping>-->
+<!--        <filter-name>cross-origin</filter-name>-->
+<!--        <url-pattern>/*</url-pattern>-->
+<!--    </filter-mapping>-->
     
 </web-app>

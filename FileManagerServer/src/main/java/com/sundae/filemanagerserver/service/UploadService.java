@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.*;
+import java.util.Base64;
 import java.util.Date;
 import java.util.UUID;
 
@@ -49,7 +50,7 @@ public class UploadService {
         String fileName = UUID.randomUUID()+"";
         String filePath = FileUtil.getTodayPath() + "/" + fileName;
 
-        byte[] randomKey = AESUtil.initKey();
+        byte[] randomKey = AESUtil.generateRandomKey();
         byte[] encryptCode = AESUtil.encryptFile2Bytes(part.getInputStream(), randomKey);
 
         File file = new File(filePath);
@@ -62,7 +63,9 @@ public class UploadService {
         fileDetail.setFilePath(filePath);
         fileDetail.setCreateTime(new Date());
         fileDetail.setFileName(file.getName());
-        String rsaEncryptKey = RSAUtil.encrypt(randomKey, RSAUtil.getPublicKeyFromResource(Constant.PUBLIC_KEY_PATH));
+        String aesKeyBase64 = Base64.getEncoder().encodeToString(randomKey);
+        System.out.println(aesKeyBase64);
+        String rsaEncryptKey = RSAUtil.encrypt(aesKeyBase64, RSAUtil.getPublicKeyFromResource(Constant.PUBLIC_KEY_PATH));
         fileDetail.setSecretKey(rsaEncryptKey);
         fileDetailDao.addFileDetail(fileDetail);
 

@@ -10,7 +10,6 @@ public class Constant {
 
     public static final String SAVE_FILE_PATH = "./files";
 
-    public static final String PUBLIC_KEY_PATH = "/key/pub.key";
     public static final String PRIVATE_KEY_PATH = "/key/pri.key";
 
 }

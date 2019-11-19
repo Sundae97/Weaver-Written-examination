@@ -1,18 +1,15 @@
 package com.sundae.filemanagerserver.util;
 
-import com.sun.org.apache.xml.internal.security.exceptions.Base64DecodingException;
-import com.sun.org.apache.xml.internal.security.utils.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.crypto.Cipher;
-import java.io.*;
+import java.io.UnsupportedEncodingException;
 import java.security.*;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.Base64;
 
 /**
  * @Author daijiyuan
@@ -44,41 +41,34 @@ public class RSAUtil {
         }
     }
 
-    public static PrivateKey getPrivateKey(String keyStr) throws NoSuchAlgorithmException, Base64DecodingException, InvalidKeySpecException {
+    public static PrivateKey getPrivateKey(String keyStr) throws NoSuchAlgorithmException, InvalidKeySpecException {
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-        byte[] decodedKey = Base64.decode(keyStr.getBytes());
+        byte[] decodedKey = Base64.getDecoder().decode(keyStr.getBytes());
         PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(decodedKey);
         return keyFactory.generatePrivate(keySpec);
     }
 
-    public static PublicKey getPublicKey(String keyStr) throws NoSuchAlgorithmException, Base64DecodingException, InvalidKeySpecException {
+    public static PublicKey getPublicKey(String keyStr) throws NoSuchAlgorithmException, InvalidKeySpecException {
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-        byte[] decodedKey = Base64.decode(keyStr.getBytes());
+        byte[] decodedKey = Base64.getDecoder().decode(keyStr.getBytes());
         X509EncodedKeySpec keySpec = new X509EncodedKeySpec(decodedKey);
         return keyFactory.generatePublic(keySpec);
     }
 
-    public static String encrypt(String str, PublicKey publicKey) throws Exception {
+    public static String encrypt(String str, PublicKey publicKey) throws Exception{
         Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-        String outStr = Base64.encode(cipher.doFinal(str.getBytes("UTF-8")));
+        String outStr = Base64.getEncoder().encodeToString(cipher.doFinal(str.getBytes("UTF-8")));
         return outStr;
     }
 
-    public static String encrypt(byte[] bytes, PublicKey publicKey) throws Exception {
-        return encrypt(new String(bytes), publicKey);
-    }
-
-    public static String decrypt(String str, PrivateKey privateKey) throws Exception {
-        byte[] inputByte = Base64.decode(str.getBytes("UTF-8"));
+    public static String decrypt(String str, PrivateKey privateKey) throws Exception{
+        //64位解码加密后的字符串
+        byte[] inputByte = Base64.getDecoder().decode(str.getBytes("UTF-8"));
         Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.DECRYPT_MODE, privateKey);
         String outStr = new String(cipher.doFinal(inputByte));
         return outStr;
-    }
-
-    public static String decrypt(byte[] bytes, PrivateKey privateKey) throws Exception {
-        return decrypt(new String(bytes), privateKey);
     }
 
     public static String sign(String data, PrivateKey privateKey) {
@@ -90,7 +80,7 @@ public class RSAUtil {
             Signature signature = Signature.getInstance("MD5withRSA");
             signature.initSign(key);
             signature.update(data.getBytes());
-            return Base64.encode(signature.sign()).replaceAll("\n","");
+            return Base64.getEncoder().encodeToString(signature.sign()).replaceAll("\n","");
         }catch (Exception e){
             logger.error("sign()", e);
             return null;
@@ -106,7 +96,7 @@ public class RSAUtil {
             Signature signature = Signature.getInstance("MD5withRSA");
             signature.initVerify(key);
             signature.update(srcData.getBytes());
-            return signature.verify(Base64.decode(sign.getBytes()));
+            return signature.verify(Base64.getDecoder().decode(sign.getBytes()));
         }catch (Exception e) {
             logger.error("verifySign()", e);
             return false;

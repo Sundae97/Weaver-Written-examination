@@ -1,14 +1,13 @@
-package com.sundae.filemanagerserver.bean;
+package com.sundae.filemanagerclient.bean;
 
 import java.util.Date;
 
 /**
  * @Author daijiyuan
  * @Email 948820549@qq.com
- * @Date 2019/11/15 下午7:05
+ * @Date 2019/11/19 下午1:29
  * @Description
  */
-
 public class FileDetail {
     private long id;
     private String fileSourceName;
@@ -108,27 +107,5 @@ public class FileDetail {
                 ", filePath='" + filePath + '\'' +
                 ", secretKey='" + secretKey + '\'' +
                 '}';
-    }
-
-    public String toJsonString(){
-        String jsonStr = "{\"createTime\":\"%s\"," +
-                "\"fileName\":\"%s\"," +
-                "\"filePath\":\"%s\"," +
-                "\"fileSize\":%d," +
-                "\"fileSourceName\":\"%s\"," +
-                "\"fileType\":\"%s\"," +
-                "\"id\":%d," +
-                "\"secretKey\":\"%s\"" +
-                "}";
-        return String.format(jsonStr,
-                createTime,
-                fileName,
-                filePath,
-                fileSize,
-                fileSourceName,
-                fileType,
-                id,
-                secretKey
-                );
     }
 }

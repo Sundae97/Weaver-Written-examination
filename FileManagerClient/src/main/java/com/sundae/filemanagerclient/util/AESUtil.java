@@ -1,12 +1,12 @@
 package com.sundae.filemanagerclient.util;
 
-import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
+import javax.crypto.*;
+import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
+import java.io.*;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Base64;
 
 /**
  * @Author daijiyuan
@@ -15,25 +15,61 @@ import java.io.InputStream;
  * @Description
  */
 public class AESUtil {
-    public static final String KEY_ALGORITHM = "AES";
+    private static final String KEY_ALGORITHM = "AES";
+    private static final String CHAR_ENCODING = "UTF-8";
     public static final String CIPHER_ALGORITHM_ECB = "AES/ECB/PKCS5Padding";
 
-    public static byte[] initKey() throws Exception {
-        KeyGenerator kg = KeyGenerator.getInstance(KEY_ALGORITHM);
-        kg.init(128);
-        return kg.generateKey().getEncoded();
+    public static byte[] generateRandomKey() throws Exception {
+        KeyGenerator keygen = KeyGenerator.getInstance(KEY_ALGORITHM);
+        SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+        keygen.init(128,random);
+        return keygen.generateKey().getEncoded();
+    }
+
+    public static String generateRandomKeyWithBase64() throws Exception {
+        return Base64.getEncoder().encodeToString(generateRandomKey());
+    }
+
+    public static SecretKey getKey(byte[] key) throws NoSuchAlgorithmException {
+        KeyGenerator keygen = KeyGenerator.getInstance(KEY_ALGORITHM);
+        SecureRandom random=SecureRandom.getInstance("SHA1PRNG");
+        random.setSeed(key);
+        keygen.init(128, random);
+        return keygen.generateKey();
     }
 
     public static byte[] encrypt(byte[] data, byte[] key) throws Exception {
         Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM_ECB);
-        cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(key, KEY_ALGORITHM));
-        return cipher.doFinal(data);
+        cipher.init(Cipher.ENCRYPT_MODE, getKey(key));//使用解密模式初始化 密钥
+        byte[] decrypt = cipher.doFinal(data);
+        return decrypt;
     }
 
     public static byte[] decrypt(byte[] data, byte[] key) throws Exception {
         Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM_ECB);
-        cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(key, KEY_ALGORITHM));
-        return cipher.doFinal(data);
+        cipher.init(Cipher.DECRYPT_MODE, getKey(key));//使用解密模式初始化 密钥
+        byte[] decrypt = cipher.doFinal(data);
+        return decrypt;
+    }
+
+    public static String encryptToBase64(String data, String key) {
+        try {
+            byte[] valueByte = encrypt(data.getBytes(CHAR_ENCODING), key.getBytes(CHAR_ENCODING));
+            return Base64.getEncoder().encodeToString(valueByte);
+        } catch (Exception e) {
+            throw new RuntimeException("encrypt fail!", e);
+        }
+
+    }
+
+    public static String decryptFromBase64(String data, String key) {
+        try {
+            byte[] originalData = Base64.getDecoder().decode(data.getBytes());
+            byte[] valueByte = decrypt(originalData, key.getBytes(CHAR_ENCODING));
+            return new String(valueByte, CHAR_ENCODING);
+        } catch (Exception e) {
+            throw new RuntimeException("decrypt fail!", e);
+        }
     }
 
     public static byte[] encryptFile2Bytes(InputStream inputStream, byte[] key) throws Exception{

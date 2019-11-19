@@ -14,9 +14,9 @@ public class Constant {
     public static final String TABLE_NAME = "file_detail_table";
 
     public static final int SERVER_PORT = 9999;
-    public static final String PATH_WEBAPP = "./web";
+    public static final String PATH_WEBAPP = "web";
     public static final String PATH_CONTEXT = "/";
-    public static final String PATH_DESCRIPTOR = "./WEB-INF/web.xml";
+    public static final String PATH_DESCRIPTOR = "web/WEB-INF/web.xml";
 
     public static final String SAVE_FILE_PATH = "./files";
 

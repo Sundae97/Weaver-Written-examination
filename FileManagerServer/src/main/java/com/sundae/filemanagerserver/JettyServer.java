@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.DispatcherType;
+import java.io.File;
 import java.util.EnumSet;
 
 /**
@@ -34,8 +35,9 @@ public class JettyServer {
         connector.setReuseAddress(true);   //端口占用是不会报错
         server.setConnectors(new Connector[]{connector});
 
-//        WebAppContext webContext = new WebAppContext(Constant.PATH_WEBAPP, Constant.PATH_CONTEXT);
+//        WebAppContext webContext = new WebAppContext();
 //        webContext.setDescriptor(Constant.PATH_DESCRIPTOR);
+//        webContext.setContextPath(Constant.PATH_CONTEXT);
 //        webContext.setResourceBase(Constant.PATH_WEBAPP);
 //        webContext.setClassLoader(Thread.currentThread().getContextClassLoader());
 
@@ -44,8 +46,8 @@ public class JettyServer {
         servletContextHandler.addServlet(DownloadServlet.class, "/download");
         servletContextHandler.addServlet(GetMetaDataServlet.class, "/getMetaData");
         servletContextHandler.addServlet(GetMetaDataListServlet.class, "/getMetaDataList");
-        servletContextHandler.addFilter(AuthFilter.class, "/*", EnumSet.of(DispatcherType.REQUEST));
 
+        servletContextHandler.addFilter(AuthFilter.class, "/*", EnumSet.of(DispatcherType.REQUEST));
         server.setHandler(servletContextHandler);
     }
 

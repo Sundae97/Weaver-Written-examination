@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 public class FeignConfiguration implements RequestInterceptor {
     @Override
     public void apply(RequestTemplate requestTemplate) {
-        requestTemplate.header("X-SID", "message");
+        requestTemplate.header("X-SID", "message"); //TODO random X-SID
         requestTemplate.header("X-Signature", "Co0O9CUAPX+vjVncICuea0tYv9uk2KUrTMbWiD7tT9nnaeh+ZMFWUKJnskSFu6s3Uu2tWRju9iReM3znmMXWvLhHvUjN7mzw67lhuWP2lJLqKY6Ko/mcNmXtYvuAdsmSHBp4xIaXa9SNIme6vM8uxYyyrwf4FFmggUhjVXxWOss=");
     }
 }

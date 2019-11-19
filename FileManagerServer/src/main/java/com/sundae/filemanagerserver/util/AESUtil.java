@@ -17,7 +17,7 @@ import java.util.Base64;
 public class AESUtil {
     private static final String KEY_ALGORITHM = "AES";
     private static final String CHAR_ENCODING = "UTF-8";
-    public static final String CIPHER_ALGORITHM_ECB = "AES/ECB/PKCS5Padding";
+    public static final String CIPHER_ALGORITHM_ECB = "AES";
 
     public static byte[] generateRandomKey() throws Exception {
         KeyGenerator keygen = KeyGenerator.getInstance(KEY_ALGORITHM);

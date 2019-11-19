@@ -52,9 +52,15 @@ public class FileDetailService {
             return;
         }
 
-        byte[] bytes = new byte[len];
-        inputStream.read(bytes, 0, len);
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        byte[] buffer = new byte[4096];
+        int n = 0;
+        while (-1 != (n = inputStream.read(buffer))) {
+            output.write(buffer, 0, n);
+        }
+        byte[] bytes = output.toByteArray();
         inputStream.close();
+        output.close();
         String fileDetailStr = httpService.getFileDetailByUUID(uuid);
         if(StringUtils.isEmpty(fileDetailStr)){
             logger.error("download -> " + uuid);
@@ -62,11 +68,11 @@ public class FileDetailService {
         }
         FileDetail fileDetail = JSON.parseObject(fileDetailStr, FileDetail.class);
         String secretKey = fileDetail.getSecretKey();
-        String base64AESKey = RSAUtil.decrypt(secretKey, RSAUtil.getPrivateKeyFromResource(Constant.PRIVATE_KEY_PATH));
-        byte[] key = Base64.getDecoder().decode(base64AESKey);
-        byte[] resultBytes = AESUtil.decrypt(bytes, key);
+        String aesKey = RSAUtil.decrypt(secretKey, RSAUtil.getPrivateKeyFromResource(Constant.PRIVATE_KEY_PATH));
 
-        String fileName = URLEncoder.encode(fileDetail.getFileSourceName() + "." + fileDetail.getFileType(), "UTF-8");
+        byte[] resultBytes = AESUtil.decrypt(bytes, Base64.getDecoder().decode(aesKey));
+
+        String fileName = URLEncoder.encode(fileDetail.getFileSourceName(), "UTF-8");
         httpServletResponse.setContentType("application/octet-stream;charset=UTF-8");
         httpServletResponse.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
         httpServletResponse.addHeader("Content-Length", "" + resultBytes.length);

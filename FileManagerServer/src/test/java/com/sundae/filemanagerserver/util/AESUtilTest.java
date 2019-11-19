@@ -53,7 +53,7 @@ public class AESUtilTest {
     @Test
     public void decryptFile() throws Exception {
         FileDetailDao fileDetailDao = new FileDetailDao();
-        FileDetail fileDetail = fileDetailDao.getFileDetailByUUID("8ff0d116-2c9a-4e5c-ab8a-098eaacc5f25");
+        FileDetail fileDetail = fileDetailDao.getFileDetailByUUID("4d3cfa5c-1b7c-458c-a21d-8bcfd94e718f");
         FileInputStream fileInputStream = new FileInputStream(new File(fileDetail.getFilePath()));
         int length = fileInputStream.available();
         byte[] bytes = new byte[length];
@@ -62,7 +62,7 @@ public class AESUtilTest {
 
         String base64AESKey = RSAUtil.decrypt(fileDetail.getSecretKey(), RSAUtil.getPrivateKeyFromResource(Constant.PRIVATE_KEY_PATH));
         System.out.println(base64AESKey);
-        byte[] key = Base64.getDecoder().decode(base64AESKey);
+        byte[] key = base64AESKey.getBytes("UTF-8");
         byte[] fileBytes = AESUtil.decrypt(bytes, key);
         System.out.println(fileBytes);
 

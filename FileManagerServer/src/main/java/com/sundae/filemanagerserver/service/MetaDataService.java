@@ -26,7 +26,11 @@ public class MetaDataService {
     public void getMetaDataByUUID(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String uuid = req.getParameter("uuid");
         FileDetail fileDetail = fileDetailDao.getFileDetailByUUID(uuid);
-        resp.getWriter().println(fileDetail.toJsonString());
+        if(fileDetail == null){
+            resp.sendError(404, "Not found file!");
+        }else{
+            resp.getWriter().println(fileDetail.toJsonString());
+        }
     }
 
     public void getLatestMetaDataList(HttpServletRequest req, HttpServletResponse resp) throws IOException {

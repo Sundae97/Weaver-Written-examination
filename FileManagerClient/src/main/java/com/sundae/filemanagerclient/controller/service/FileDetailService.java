@@ -5,6 +5,7 @@ import com.sundae.filemanagerclient.Constant;
 import com.sundae.filemanagerclient.bean.FileDetail;
 import com.sundae.filemanagerclient.util.AESUtil;
 import com.sundae.filemanagerclient.util.RSAUtil;
+import feign.FeignException;
 import feign.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,6 +50,7 @@ public class FileDetailService {
         int len = inputStream.available();
         if(len <= 0){
             logger.error("file available len <= 0 -> " + uuid);
+            httpServletResponse.sendError(404, "没有目标文件");
             return;
         }
 
@@ -61,7 +63,13 @@ public class FileDetailService {
         byte[] bytes = output.toByteArray();
         inputStream.close();
         output.close();
-        String fileDetailStr = httpService.getFileDetailByUUID(uuid);
+        String fileDetailStr = null;
+        try{
+            fileDetailStr = httpService.getFileDetailByUUID(uuid);
+        }catch (FeignException.NotFound exception){
+            httpServletResponse.sendError(404,"Not found file!");
+            return;
+        }
         if(StringUtils.isEmpty(fileDetailStr)){
             logger.error("download -> " + uuid);
             return;

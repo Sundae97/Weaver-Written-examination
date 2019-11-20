@@ -28,7 +28,7 @@
                     <div class="panel-body">
                         <form class="form-inline">
                             <div class="form-group">
-                                <input id='location' class="form-control" disabled/>
+                                <input id='location' class="form-control" disabled required/>
                                 <input type="button" id="i-check" value="浏览" class="btn btn-success" onclick="openFileExplore()"/>
                                 <input type="file" id='i-file' onchange="showInInputBox()" style="display: none"/>
                                 <button type="button" class="btn btn-primary form-control" onclick="upload()" style="max-width: 54px;">上传</button>
@@ -45,10 +45,10 @@
                         <h5>下载文件</h5>
                     </div>
                     <div class="panel-body">
-                        <form class="form-inline">
+                        <form class="form-inline" action="/api/download" target="_blank" method="get">
                             <div class="form-group">
-                                <input id='uuid' type="text" class="form-control"/>
-                                <button type="button" class="btn btn-primary form-control" onclick="upload()" style="max-width: 54px;">下载</button>
+                                <input name='uuid' type="text" class="form-control" placeholder="请输入UUID" required/>
+                                <button type="submit" class="btn btn-primary form-control" style="max-width: 54px;">下载</button>
                             </div>
                         </form>
                     </div>
@@ -61,28 +61,32 @@
                         <h5>最近十条数据</h5>
                     </div>
                     <div class="panel-body">
-                        <p><button class="btn btn-warning">刷新</button></p>
+                        <p><button class="btn btn-warning" onclick="getFileList()">刷新</button></p>
                         <table class="table table-bordered table-hover">
-                            <tr class="">
-                                <th>ID</th>
-                                <th>User</th>
-                                <th>Name</th>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Sundae</td>
-                                <td>DJY</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Sundae</td>
-                                <td>DJY</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Sundae</td>
-                                <td>DJY</td>
-                            </tr>
+                            <thead>
+                                <tr class="">
+                                    <th>ID</th>
+                                    <th>User</th>
+                                    <th>Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Sundae</td>
+                                    <td>DJY</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Sundae</td>
+                                    <td>DJY</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Sundae</td>
+                                    <td>DJY</td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -103,7 +107,8 @@
         }
 
         function upload() {
-            console.log($("#i-file")[0].files[0]);
+            // console.log($("#i-file")[0].files[0]);
+            $("#upload_result").text("上传：");
             var formData = new FormData();
             formData.append("file", $("#i-file")[0].files[0]);
             $.ajax({
@@ -116,12 +121,28 @@
                 contentType : false, // 不要设置Content-Type请求头
                 success: function(data){
                     console.log(data);
+                    $("#upload_result").text("上传：" + data);
                 },
                 error:function(err){
-                    console.log(err);
+                    alert(err);
                 }
             });
+        }
 
+        function getFileList() {
+            $.ajax({
+                url:'/api/getMetaDataList',
+                dataType:'json',
+                type:'GET',
+                async: false,
+                contentType : false, // 不要设置Content-Type请求头
+                success: function(data){
+                    console.log(data['list']);
+                },
+                error:function(err){
+                    alert(err);
+                }
+            });
         }
     </script>
 </body>

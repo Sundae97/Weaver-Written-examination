@@ -1,10 +1,6 @@
 package com.sundae.filemanagerclient.controller.api;
 
-import com.alibaba.fastjson.JSON;
-import com.sundae.filemanagerclient.bean.FileDetail;
-import com.sundae.filemanagerclient.controller.service.FileDetailService;
-import com.sundae.filemanagerclient.controller.service.IHttpService;
-import feign.Response;
+import com.sundae.filemanagerclient.service.FileDetailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
 
 /**
  * @Author daijiyuan
@@ -26,8 +21,6 @@ public class ApiController {
 
     private static final Logger logger = LoggerFactory.getLogger(ApiController.class);
 
-    @Autowired
-    private IHttpService httpService;
     @Autowired
     private FileDetailService fileDetailService;
 
@@ -50,7 +43,7 @@ public class ApiController {
     @RequestMapping(value = "/getMetaDataList", method = RequestMethod.GET)
     @ResponseBody
     public String getMetaDataList(){
-        return httpService.getFileDetailList();
+        return fileDetailService.getFileDetailList();
     }
 
 }

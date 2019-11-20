@@ -3,7 +3,6 @@ package com.sundae.filemanagerclient.bean;
 import com.sundae.filemanagerclient.util.DateFormatUtil;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 /**
  * @Author daijiyuan

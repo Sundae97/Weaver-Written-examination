@@ -1,16 +1,14 @@
 package com.sundae.filemanagerclient.util;
 
-import com.sundae.filemanagerclient.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.crypto.Cipher;
-import java.io.UnsupportedEncodingException;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
+
 
 /**
  * @Author daijiyuan

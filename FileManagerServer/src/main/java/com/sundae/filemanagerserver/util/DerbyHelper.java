@@ -3,7 +3,6 @@ package com.sundae.filemanagerserver.util;
 import com.sundae.filemanagerserver.Constant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.sql.*;
 
 /**
@@ -53,7 +52,7 @@ public class DerbyHelper {
 
     private DerbyHelper(){
         try {
-            System.setProperty("derby.stream.error.file","logs/derby.log");
+            System.setProperty("derby.stream.error.file", "logs/derby.log");
             connect();
             createDefaultTable();
         } catch (ClassNotFoundException e) {

@@ -1,8 +1,6 @@
 package com.sundae.filemanagerclient.util;
 
-
 import com.sundae.filemanagerclient.Constant;
-
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 

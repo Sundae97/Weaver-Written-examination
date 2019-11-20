@@ -5,14 +5,14 @@
 
 ## 启动方式
 
-### Server
+### Server(port:9999)
 
 ```
 进入项目目录下bin/server  
 执行java -jar FileManagerServer.jar
 ```
 
-### Client
+### Client([http://localhost:8080](http://localhost:8080))
 
 ```
 进入项目目录下bin/client  
@@ -70,7 +70,9 @@
 
 开发工具：IDEA
 
-JDK版本：1.8.0_221 (HopSpot)
+JDK版本：1.8.0_221 (HopSpot 64-Bit)
+
+构建工具：Maven 3.6.1
 
 
 
@@ -78,6 +80,7 @@ JDK版本：1.8.0_221 (HopSpot)
 
 系统：Ubuntu 18.04 destop
 
-JDK版本：1.8.0_221 (HopSpot)
+JDK版本：1.8.0_221 (HopSpot 64-Bit)
 
 浏览器：Chrome 78.0.3904.97（正式版本） （64 位）
+

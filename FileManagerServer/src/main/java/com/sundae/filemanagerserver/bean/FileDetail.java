@@ -1,5 +1,9 @@
 package com.sundae.filemanagerserver.bean;
 
+import com.sundae.filemanagerserver.util.DateFormatUtil;
+
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -15,14 +19,14 @@ public class FileDetail {
     private String fileName;
     private String fileType;
     private long fileSize;
-    private Date createTime;
+    private Timestamp createTime;
     private String filePath;
     private String secretKey;
 
     public FileDetail() {
     }
 
-    public FileDetail(String fileSourceName, String fileName, String fileType, long fileSize, Date createTime, String filePath, String secretKey) {
+    public FileDetail(String fileSourceName, String fileName, String fileType, long fileSize, Timestamp createTime, String filePath, String secretKey) {
         this.fileSourceName = fileSourceName;
         this.fileName = fileName;
         this.fileType = fileType;
@@ -72,11 +76,11 @@ public class FileDetail {
         this.fileSize = fileSize;
     }
 
-    public Date getCreateTime() {
+    public Timestamp getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
     }
 
@@ -104,7 +108,7 @@ public class FileDetail {
                 ", fileName='" + fileName + '\'' +
                 ", fileType='" + fileType + '\'' +
                 ", fileSize=" + fileSize +
-                ", createTime=" + createTime +
+                ", createTime=" + DateFormatUtil.formatTimestamp(createTime) +
                 ", filePath='" + filePath + '\'' +
                 ", secretKey='" + secretKey + '\'' +
                 '}';
@@ -121,7 +125,7 @@ public class FileDetail {
                 "\"secretKey\":\"%s\"" +
                 "}";
         return String.format(jsonStr,
-                createTime,
+                DateFormatUtil.formatTimestamp(createTime),
                 fileName,
                 filePath,
                 fileSize,

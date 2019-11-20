@@ -61,31 +61,17 @@
                         <h5>最近十条数据</h5>
                     </div>
                     <div class="panel-body">
-                        <p><button class="btn btn-warning" onclick="getFileList()">刷新</button></p>
+                        <p><button class="btn btn-warning" onclick="updateFileList()">刷新</button></p>
                         <table class="table table-bordered table-hover">
                             <thead>
                                 <tr class="">
-                                    <th>ID</th>
-                                    <th>User</th>
-                                    <th>Name</th>
+                                    <th>UUID</th>
+                                    <th>文件名</th>
+                                    <th>文件大小</th>
+                                    <th>上传时间</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Sundae</td>
-                                    <td>DJY</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Sundae</td>
-                                    <td>DJY</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Sundae</td>
-                                    <td>DJY</td>
-                                </tr>
+                            <tbody id="table_body">
                             </tbody>
                         </table>
                     </div>
@@ -124,12 +110,14 @@
                     $("#upload_result").text("上传：" + data);
                 },
                 error:function(err){
-                    alert(err);
+                    console.log(err);
+                    alert("网络异常");
                 }
             });
         }
 
-        function getFileList() {
+        function updateFileList() {
+            clearList();
             $.ajax({
                 url:'/api/getMetaDataList',
                 dataType:'json',
@@ -137,12 +125,31 @@
                 async: false,
                 contentType : false, // 不要设置Content-Type请求头
                 success: function(data){
-                    console.log(data['list']);
+                    // console.log(data['list']);
+                    for (var i = 0; i < data['length']; i++) {
+                        addData2List(data['list'][i]);
+                    }
+                    alert("获取成功！");
                 },
                 error:function(err){
-                    alert(err);
+                    console.log(err);
+                    alert("网络异常");
                 }
             });
+        }
+
+        function addData2List(data){
+            var html = "<tr>\n" +
+                "       <td>" + data['fileName'] + "</td>\n" +
+                "       <td>" + data['fileSourceName'] + "</td>\n" +
+                "       <td>" + data['fileSize'] + "</td>\n" +
+                "       <td>" + data['createTime'] + "</td>\n" +
+                "</tr>";
+            $("#table_body").append(html);
+        }
+
+        function clearList() {
+            $("#table_body").html("");
         }
     </script>
 </body>

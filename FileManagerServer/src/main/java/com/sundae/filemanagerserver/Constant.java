@@ -23,4 +23,6 @@ public class Constant {
     public static final String PUBLIC_KEY_PATH = "/key/pub.key";
     public static final String PRIVATE_KEY_PATH = "/key/pri.key";
 
+    public static final String DATE_FORMAT_STRING = "yyyy-MM-dd HH:mm:ss";
+
 }

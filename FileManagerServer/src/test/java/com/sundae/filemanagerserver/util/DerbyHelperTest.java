@@ -22,7 +22,7 @@ public class DerbyHelperTest {
             FileDetail fileDetail = new FileDetail();
             fileDetail.setId(resultSet.getLong("id"));
             fileDetail.setFileName(resultSet.getString("file_name"));
-            fileDetail.setCreateTime(resultSet.getDate("create_date"));
+            fileDetail.setCreateTime(resultSet.getTimestamp("create_date"));
             fileDetail.setSecretKey(resultSet.getString("secret_key"));
             fileDetail.setFilePath(resultSet.getString("file_path"));
             fileDetail.setFileSize(resultSet.getLong("file_size"));

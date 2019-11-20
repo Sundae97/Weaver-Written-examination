@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +28,7 @@ public class FileDetailDao {
 
 
     private static final String INSERT_SQL = "INSERT INTO " + TABLE_NAME + " " +
-            "(file_sourcename,file_name,file_type,file_size,create_date,file_path,secret_key) " +
+            "(file_sourcename,file_name,file_type,file_size,file_path,secret_key,create_date) " +
             "VALUES(?,?,?,?,?,?,?)";
     public int addFileDetail(FileDetail fileDetail){
         try {
@@ -35,9 +37,9 @@ public class FileDetailDao {
                     fileDetail.getFileName(),
                     fileDetail.getFileType(),
                     fileDetail.getFileSize(),
-                    fileDetail.getCreateTime(),
                     fileDetail.getFilePath(),
-                    fileDetail.getSecretKey()
+                    fileDetail.getSecretKey(),
+                    fileDetail.getCreateTime()
             });
         } catch (SQLException e) {
             logger.error("addFileDetail()", e);
@@ -97,7 +99,7 @@ public class FileDetailDao {
         FileDetail fileDetail = new FileDetail();
         fileDetail.setId(resultSet.getLong("id"));
         fileDetail.setFileName(resultSet.getString("file_name"));
-        fileDetail.setCreateTime(resultSet.getDate("create_date"));
+        fileDetail.setCreateTime(resultSet.getTimestamp("create_date"));
         fileDetail.setSecretKey(resultSet.getString("secret_key"));
         fileDetail.setFilePath(resultSet.getString("file_path"));
         fileDetail.setFileSize(resultSet.getLong("file_size"));

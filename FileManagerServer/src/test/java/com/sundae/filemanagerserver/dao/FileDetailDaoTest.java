@@ -1,8 +1,10 @@
 package com.sundae.filemanagerserver.dao;
 
 import com.sundae.filemanagerserver.bean.FileDetail;
+import com.sundae.filemanagerserver.util.DateFormatUtil;
 import org.junit.Test;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,7 +27,7 @@ public class FileDetailDaoTest {
             fileDetail.setFileType("jpg");
             fileDetail.setFileSize(1024);
             fileDetail.setFilePath("/pic/test");
-            fileDetail.setCreateTime(new Date());
+            fileDetail.setCreateTime(DateFormatUtil.getNowTimestamp());
             fileDetail.setFileName("asbduibiubiasd==");
             fileDetail.setSecretKey("aoyisudgfaofyuiadiyufgbas");
             int k = new FileDetailDao().addFileDetail(fileDetail);

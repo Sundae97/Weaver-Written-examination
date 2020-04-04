@@ -73,7 +73,7 @@
 
 ## 开发环境
 
-系统：Ubuntu 18.04 destop
+系统：Ubuntu 18.04 desktop
 
 开发工具：IDEA
 
@@ -85,7 +85,7 @@ JDK版本：1.8.0_221 (HopSpot 64-Bit)
 
 ## 测试环境
 
-系统：Ubuntu 18.04 destop
+系统：Ubuntu 18.04 desktop
 
 JDK版本：1.8.0_221 (HopSpot 64-Bit)
 
